@@ -62,7 +62,7 @@ public class AudioAnalyzer : MonoBehaviour
             }
             average /= (float)width;
             bands[i] = average;
-            Debug.Log("Band[" + i + "] value is :" + average);
+            //Debug.Log("Band[" + i + "] value is :" + average);
         }
 
     }
