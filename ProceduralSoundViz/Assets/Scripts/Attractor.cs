@@ -16,6 +16,22 @@ public class Attractor : MonoBehaviour {
     protected Material _material;
     protected float _bandOutput;
 
+    public static T Create<T>(float size, int objectCount, int audioBand, float treshHold, Material color) where T : Attractor {
+        Attractor attractor = GameObject.CreatePrimitive(PrimitiveType.Sphere).AddComponent<T>();
+        attractor.gameObject.name = "Attractor";
+        attractor._size = size;
+        //attractor.transform.position = pos;
+        attractor._objectsCount = objectCount;
+        attractor._audioBand = audioBand;
+        attractor._bandTreshhold = treshHold;
+        Renderer rend = attractor.gameObject.GetComponent<Renderer>();
+        //mat = color;
+        rend.material = color;
+        attractor._material = color;
+        return attractor.GetComponent<T>();
+    }
+
+    /*
     public static Attractor Create(float size, int objectCount, int audioBand, float treshHold,Material color) {
         Attractor attractor = GameObject.CreatePrimitive(PrimitiveType.Sphere).AddComponent<Attractor>();
         attractor.gameObject.name = "Attractor";
@@ -31,6 +47,7 @@ public class Attractor : MonoBehaviour {
         return attractor;
 
     }
+    */
 	// Use this for initialization
 	void Start () {
         CreateSoundReactiveObjects();

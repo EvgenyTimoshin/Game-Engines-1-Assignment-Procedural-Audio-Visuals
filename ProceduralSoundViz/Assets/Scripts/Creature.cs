@@ -73,7 +73,7 @@ public class Creature : MonoBehaviour {
     }
 
     public void SetTargetPosition(Vector3 newEndPos){
-        _targetPos = newEndPos;
+        _posLerpSpeed = speed;
     }
 
     public void SetLerpSpeed(float speed) {

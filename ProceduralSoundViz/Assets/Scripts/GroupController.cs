@@ -35,7 +35,7 @@ public class GroupController : MonoBehaviour
     public int _numOfObjects;
     private int _degreeDiff;
 
-    private Dictionary<Creature,int> _objects = new Dictionary<Creature,int>();
+    private Dictionary<PhylloAttractor,int> _objects = new Dictionary<PhylloAttractor,int>();
 
     private void Awake()
     {
@@ -56,7 +56,7 @@ public class GroupController : MonoBehaviour
 
         for (int i = 0; i < _numOfObjects; i++)
         {
-            SphereWorm worm = Creature.Create<SphereWorm>(CalculatePhylllotaxis(_degree, _scale, n), segmentNumber, 5);
+            Attractor a = Attractor.Create(CalculatePhylllotaxis(_degree, _scale, n), segmentNumber, 5);
             _objects.Add(worm, n);
             n = n + _degreeDiff;
         }

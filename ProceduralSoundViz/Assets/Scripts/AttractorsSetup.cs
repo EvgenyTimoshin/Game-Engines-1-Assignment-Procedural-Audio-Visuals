@@ -28,7 +28,7 @@ public class AttractorsSetup : MonoBehaviour {
             Color color = _gradient.Evaluate(step * i);
             Material newMaterial = new Material(Shader.Find("Transparent/Diffuse"));
             newMaterial.color = color;
-            Attractor at = Attractor.Create(_attractorsScale, _objectsPerAttractor, _attractorBands[i],_audioTreshhold,newMaterial);
+            Attractor at = Attractor.Create<Attractor>(_attractorsScale, _objectsPerAttractor, _attractorBands[i],_audioTreshhold,newMaterial);
             at.transform.position = new Vector3(transform.position.x + (_attractorSpacing * i * _directionOfLayout.x),
                transform.position.y + (_attractorSpacing * i * _directionOfLayout.y),
                transform.position.z + (_attractorSpacing * i * _directionOfLayout.z));
