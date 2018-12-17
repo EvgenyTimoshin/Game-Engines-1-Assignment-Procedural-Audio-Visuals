@@ -7,12 +7,13 @@ public class AffectedByGravity : MonoBehaviour {
     protected Transform _attractedTo;
     ///Make this modifiable in the editor
     protected float _attractionStrenght = 100;
-    protected float _maxPower = 100;
+    protected float _maxPower = 50;
     protected float _size;
     // Use this for initialization
 
     public static AffectedByGravity Create(Vector3 pos, float size, Transform attractedTo) {
         AffectedByGravity ab = GameObject.CreatePrimitive(PrimitiveType.Sphere).AddComponent<AffectedByGravity>();
+        ab.gameObject.AddComponent<Rigidbody>();
         ab._size = size;
         ab.transform.localScale = new Vector3(size,size,size);
         ab._attractedTo = attractedTo;
