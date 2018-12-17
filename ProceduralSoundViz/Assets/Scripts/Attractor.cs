@@ -14,12 +14,14 @@ public class Attractor : MonoBehaviour {
     protected GameObject _objectPrefab;
     protected List<AffectedByGravity> _soundObjects = new List<AffectedByGravity>();
 
-    public static Attractor Create(Vector3 pos, float size, int objectCount, int audioBand) {
+    public static Attractor Create(float size, int objectCount, int audioBand, float treshHold) {
         Attractor attractor = GameObject.CreatePrimitive(PrimitiveType.Sphere).AddComponent<Attractor>();
+        attractor.gameObject.name = "Attractor";
         attractor._size = size;
-        attractor.transform.position = pos;
+        //attractor.transform.position = pos;
         attractor._objectsCount = objectCount;
         attractor._audioBand = audioBand;
+        attractor._bandTreshhold = treshHold;
         return attractor;
 
     }
@@ -44,9 +46,10 @@ public class Attractor : MonoBehaviour {
 
     private void CreateSoundReactiveObjects() {
         for (int i = 0; i < _objectsCount; i++) {
-            Vector3 randomDirection = new Vector3(Random.value, Random.value, Random.value);
+            Vector3 randomDirection = new Vector3(Random.Range(1, 3), Random.Range(1, 3), Random.Range(1, 3));
             //EXPOSE SIZE IN EDITOR FOR MODIFICATION
-            AffectedByGravity ab = AffectedByGravity.Create(transform.position += randomDirection, 0.3f, transform);
+            Vector3 randomOffsetPoint = transform.position + randomDirection;
+            AffectedByGravity ab = AffectedByGravity.Create(randomOffsetPoint, 0.3f, transform);
             _soundObjects.Add(ab); 
         }
     }

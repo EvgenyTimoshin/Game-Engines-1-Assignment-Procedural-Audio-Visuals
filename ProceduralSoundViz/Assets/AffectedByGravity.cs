@@ -13,7 +13,9 @@ public class AffectedByGravity : MonoBehaviour {
 
     public static AffectedByGravity Create(Vector3 pos, float size, Transform attractedTo) {
         AffectedByGravity ab = GameObject.CreatePrimitive(PrimitiveType.Sphere).AddComponent<AffectedByGravity>();
-        ab.gameObject.AddComponent<Rigidbody>();
+        Rigidbody rb = ab.gameObject.AddComponent<Rigidbody>();
+        rb.useGravity = false
+        ab.gameObject.name = "ReactiveObj";
         ab._size = size;
         ab.transform.localScale = new Vector3(size,size,size);
         ab._attractedTo = attractedTo;
@@ -24,6 +26,14 @@ public class AffectedByGravity : MonoBehaviour {
 	void Start () {
         _rb = GetComponent<Rigidbody>();
 	}
+
+    public void GravityOn() {
+        _rb.useGravity = true;
+    }
+
+    public void GravityOff() {
+        _rb.useGravity = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
