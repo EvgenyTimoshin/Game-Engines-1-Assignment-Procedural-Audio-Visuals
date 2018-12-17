@@ -14,11 +14,17 @@ public class AttractorsSetup : MonoBehaviour {
     public float _attractorsScale;
     public Vector3 _directionOfLayout;
     private List<Attractor> _attractors = new List<Attractor>();
+    public Gradient _gradient;
     
 	// Use this for initialization
 	void Start () {
         for (int i = 0; i < _attractorBands.Length; i++) {
-            Attractor at = Attractor.Create(_attractorsScale, _objectsPerAttractor, _attractorBands[i],(int)_attractorAudioTreshHolds[i]);
+
+            float step = 1.0f / _attractorBands.Length;
+            Color color = _gradient.Evaluate(step * i);
+            Material newMaterial = new Material(Shader.Find("Transparent/Diffuse"));
+            newMaterial.color = color;
+            Attractor at = Attractor.Create(_attractorsScale, _objectsPerAttractor, _attractorBands[i],(int)_attractorAudioTreshHolds[i],newMaterial);
             at.transform.position = new Vector3(transform.position.x + (_attractorSpacing * i * _directionOfLayout.x),
                transform.position.y + (_attractorSpacing * i * _directionOfLayout.y),
                transform.position.z + (_attractorSpacing * i * _directionOfLayout.z));

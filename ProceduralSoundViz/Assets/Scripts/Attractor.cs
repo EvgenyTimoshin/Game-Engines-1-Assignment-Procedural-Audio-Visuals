@@ -13,8 +13,10 @@ public class Attractor : MonoBehaviour {
     protected float _bandTreshhold = 0.5f;
     protected GameObject _objectPrefab;
     protected List<AffectedByGravity> _soundObjects = new List<AffectedByGravity>();
+    protected Material _material;
+    protected float _bandOutput;
 
-    public static Attractor Create(float size, int objectCount, int audioBand, float treshHold) {
+    public static Attractor Create(float size, int objectCount, int audioBand, float treshHold,Material color) {
         Attractor attractor = GameObject.CreatePrimitive(PrimitiveType.Sphere).AddComponent<Attractor>();
         attractor.gameObject.name = "Attractor";
         attractor._size = size;
@@ -22,6 +24,10 @@ public class Attractor : MonoBehaviour {
         attractor._objectsCount = objectCount;
         attractor._audioBand = audioBand;
         attractor._bandTreshhold = treshHold;
+        Renderer rend = attractor.gameObject.GetComponent<Renderer>();
+        //mat = color;
+        rend.material = color;
+        attractor._material = color;
         return attractor;
 
     }
@@ -36,20 +42,24 @@ public class Attractor : MonoBehaviour {
 	}
 
     private void BounceObjects() {
+        foreach (AffectedByGravity obj in _soundObjects) {
+            obj.Scale(_bandOutput);
+        }
+
     }
 
     private void CheckBandTreshHold() {
-        if (AudioAnalyzer.bands[_audioBand] > _bandTreshhold) {
+        _bandOutput = AudioAnalyzer.bands[_audioBand];
+        if (_bandOutput > _bandTreshhold) {
             BounceObjects();
         }
     }
 
     private void CreateSoundReactiveObjects() {
         for (int i = 0; i < _objectsCount; i++) {
-            Vector3 randomDirection = new Vector3(Random.Range(1, 3), Random.Range(1, 3), Random.Range(1, 3));
+            Vector3 randomDirection = new Vector3(transform.position.x + Random.Range(-3, 3), transform.position.y + Random.Range(-3, 3), transform.position.z + Random.Range(-3, 3));
             //EXPOSE SIZE IN EDITOR FOR MODIFICATION
-            Vector3 randomOffsetPoint = transform.position + randomDirection;
-            AffectedByGravity ab = AffectedByGravity.Create(randomOffsetPoint, 0.3f, transform);
+            AffectedByGravity ab = AffectedByGravity.Create(randomDirection, 0.3f, transform, _material);
             _soundObjects.Add(ab); 
         }
     }

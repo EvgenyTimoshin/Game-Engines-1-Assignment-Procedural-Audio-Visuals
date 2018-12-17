@@ -239,7 +239,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &502001944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,7 +469,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 534669902}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -161.7}
+  m_LocalPosition: {x: 0, y: 1, z: -5.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -491,7 +491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!96 &541234434
 TrailRenderer:
   serializedVersion: 2
@@ -666,7 +666,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!96 &551754956
 TrailRenderer:
   serializedVersion: 2
@@ -841,7 +841,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!96 &623337935
 TrailRenderer:
   serializedVersion: 2
@@ -1326,6 +1326,86 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1298831238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1298831240}
+  - component: {fileID: 1298831239}
+  m_Layer: 0
+  m_Name: AttractorManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1298831239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1298831238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ffab0777fef3c6418fad03637a6a78f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attractorBands: 010000000300000004000000050000000100000001000000
+  _attractorAudioTreshHolds:
+  - 0.5
+  - 0.2
+  - 0.5
+  - 0.5
+  - 0.5
+  _attractorSpacing: 1.75
+  _objectsPerAttractor: 50
+  _attractorsScale: 1.15
+  _directionOfLayout: {x: 1, y: 0, z: 0}
+  _gradient:
+    serializedVersion: 2
+    key0: {r: 0.91832304, g: 1, b: 0, a: 1}
+    key1: {r: 0.09743297, g: 1, b: 0, a: 1}
+    key2: {r: 0, g: 0.71649295, b: 0.98039216, a: 0}
+    key3: {r: 1, g: 0.41037738, b: 0.41640082, a: 0}
+    key4: {r: 1, g: 0.051886797, b: 0.058207545, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 8867
+    ctime1: 19853
+    ctime2: 28913
+    ctime3: 42212
+    ctime4: 54741
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 5
+    m_NumAlphaKeys: 2
+--- !u!4 &1298831240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1298831238}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.75, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1515438474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1610,7 +1690,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!96 &2106819290
 TrailRenderer:
   serializedVersion: 2
@@ -1785,7 +1865,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!96 &2132741020
 TrailRenderer:
   serializedVersion: 2
