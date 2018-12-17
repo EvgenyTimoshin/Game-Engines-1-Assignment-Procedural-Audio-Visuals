@@ -21,18 +21,18 @@ public class SphereWorm : Creature {
     public override void CreateSegments()
     {
         float depth = _size * 0.05f;
-        Vector3 startPos = Vector3.forward * depth;
+        Vector3 startPos = -Vector3.forward * depth;
 
 
         GameObject previous = null;
-
+        previous = _driver;
         for (int i = 0; i < _segmentNumber; i++)
         {
             GameObject segment = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             Rigidbody rb = segment.AddComponent<Rigidbody>();
             rb.useGravity = false;
             rb.mass = 1.0f;
-            Vector3 pos = startPos + (-Vector3.forward * depth * 4 * i);
+            Vector3 pos = startPos + (Vector3.forward * depth * 4 * i);
             segment.transform.position = transform.TransformPoint(pos);
             segment.transform.rotation = transform.rotation;
             segment.transform.parent = this.transform;
