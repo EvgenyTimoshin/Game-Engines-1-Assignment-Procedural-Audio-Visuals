@@ -11,7 +11,7 @@ public class AffectedByGravity : MonoBehaviour {
     protected float _size;
     protected Color _color = new Color(0, 0, 0);
     protected Color _soundColor;
-    protected float _maxSize = 1.5f;
+    protected float _maxSize;
     protected Vector3 _minSize;
     protected bool _lerpyScale = true;
     // Use this for initialization
@@ -23,6 +23,7 @@ public class AffectedByGravity : MonoBehaviour {
         ab.gameObject.name = "ReactiveObj";
         ab._size = size;
         ab.transform.localScale = new Vector3(size,size,size);
+        ab._maxSize = size * 4;
         ab._attractedTo = attractedTo;
         ab.transform.position = pos;
         ab.GetComponent<Renderer>().material = mat;

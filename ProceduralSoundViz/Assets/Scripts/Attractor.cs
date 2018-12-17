@@ -20,6 +20,7 @@ public class Attractor : MonoBehaviour {
         Attractor attractor = GameObject.CreatePrimitive(PrimitiveType.Sphere).AddComponent<T>();
         attractor.gameObject.name = "Attractor";
         attractor._size = size;
+        attractor.transform.localScale = new Vector3(size,size,size);
         //attractor.transform.position = pos;
         attractor._objectsCount = objectCount;
         attractor._audioBand = audioBand;
@@ -78,6 +79,7 @@ public class Attractor : MonoBehaviour {
     private void CheckBandTreshHold() {
         _bandOutput = AudioAnalyzer.bands[_audioBand];
         if (_bandOutput > _bandTreshhold) {
+            Debug.Log("BOUNCE");
             BounceObjects();
         }
     }
@@ -86,7 +88,7 @@ public class Attractor : MonoBehaviour {
         for (int i = 0; i < _objectsCount; i++) {
             Vector3 randomDirection = new Vector3(transform.position.x + Random.Range(-3, 3), transform.position.y + Random.Range(-3, 3), transform.position.z + Random.Range(-3, 3));
             //EXPOSE SIZE IN EDITOR FOR MODIFICATION
-            AffectedByGravity ab = AffectedByGravity.Create(randomDirection, 0.3f, transform, _material);
+            AffectedByGravity ab = AffectedByGravity.Create(randomDirection, _size*0.5f, transform, _material);
             ab.transform.parent = transform;
             _soundObjects.Add(ab); 
         }

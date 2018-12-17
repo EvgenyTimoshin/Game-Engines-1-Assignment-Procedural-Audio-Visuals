@@ -19,9 +19,13 @@ public class AttractorsSetup : MonoBehaviour {
 
     [Range(0,1)]
     public float _audioTreshhold;
+
+    ///PhylloTaxis Stuff
+    public bool _phylotaxisOn;
+
     
 	// Use this for initialization
-	void Start () {
+	public virtual void Start () {
         for (int i = 0; i < _attractorBands.Length; i++) {
 
             float step = 1.0f / _attractorBands.Length;

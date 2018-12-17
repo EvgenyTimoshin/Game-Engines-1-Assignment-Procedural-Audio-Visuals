@@ -8,34 +8,53 @@ using UnityEngine;
 
 public class GroupController : MonoBehaviour
 {
-    private Material _trailMat;
+    
     public Color _trailColor;
     public GameObject _creature;
     public int _startNumber;
-    private int _number;
     public int _maxIteration;
     public int _stepSize;
-    private int _currentIteration;
 
     //Lerping
     public bool _useLerping;
-    private bool _isLerping;
-    private Vector3 _startPos, _endPos;
-    private float _lerpPosTimer, _lerpPosSpeed;
     public Vector2 _lerpPosSpeedMinMax;
     public AnimationCurve _lerpPosAnimCurve;
     public int _lerpPosBand;
-
     public float _scale;
     public float _degree;
+    [Range(1, 7)]
+    public int _numOfObjects;
 
     private TrailRenderer _trailRenderer;
     private Vector2 _phyllotaxisPosition;
-
-    public int _numOfObjects;
+    private bool _isLerping;
+    private Vector3 _startPos, _endPos;
+    private float _lerpPosTimer, _lerpPosSpeed;
+    private int _currentIteration;
+    private int _number;
+    private Material _trailMat;
     private int _degreeDiff;
 
-    private Dictionary<PhylloAttractor,int> _objects = new Dictionary<PhylloAttractor,int>();
+    public bool _setUpBubbles = false;
+    public bool _setUpTrails = false;
+
+    //Phyllotaxis stuff
+    public int[] _attractorBands;
+    public float[] _attractorAudioTreshHolds;
+    [Range(0, 10)]
+    public float _attractorSpacing;
+    [Range(0, 60)]
+    public int _objectsPerAttractor;
+    [Range(0, 10)]
+    public float _attractorsScale;
+    public Vector3 _directionOfLayout;
+    public Gradient _gradient;
+    public bool _lerpyScale = false;
+
+    [Range(0, 1)]
+    public float _audioTreshhold;
+
+    private Dictionary<MovingAttractor,int> _objects = new Dictionary<MovingAttractor,int>();
 
     private void Awake()
     {
@@ -47,46 +66,58 @@ public class GroupController : MonoBehaviour
         _number = _startNumber;
         */
         //transform.localPosition = CalculatePhylllotaxis(_degree, _scale, _number);
-
         _degreeDiff = (int)(360 / _degree / _numOfObjects);
         Debug.Log("DEGREE DIFF" + _degreeDiff);
         var n = _startNumber;
-        //TODO CALCULATE BASED ON SIZE OF SCALE AND ALSO NUMBER OF OBJECTS
-        var segmentNumber = 3;
 
-        for (int i = 0; i < _numOfObjects; i++)
+        for (int i = 0; i < _attractorBands.Length; i++)
         {
-            Attractor a = Attractor.Create(CalculatePhylllotaxis(_degree, _scale, n), segmentNumber, 5);
-            _objects.Add(worm, n);
+            float step = 1.0f / _attractorBands.Length;
+            Color color = _gradient.Evaluate(step * i);
+            Material newMaterial = new Material(Shader.Find("Transparent/Diffuse"));
+            newMaterial.color = color;
+            MovingAttractor a = Attractor.Create<MovingAttractor> (_attractorsScale, _objectsPerAttractor, _attractorBands[i], _audioTreshhold, newMaterial);
+            a.transform.localPosition = CalculatePhylllotaxis(_degree, _scale, _number);
+            _objects.Add(a, n);
             n = n + _degreeDiff;
         }
 
         if (_useLerping)
         {
             _isLerping = true;
-
             ///ABSTRACT
-            var creatures = new List<Creature>(_objects.Keys);
-            foreach (Creature creature in creatures)
+            var attractors = new List<MovingAttractor>(_objects.Keys);
+            foreach (MovingAttractor attractor in attractors)
             {
                 Debug.Log("blah blah");
-                _objects[creature] += _stepSize;
-                _phyllotaxisPosition = CalculatePhylllotaxis(_degree, _scale, _objects[creature]);
-                creature.SetTargetPosition(new Vector3(_phyllotaxisPosition.x, _phyllotaxisPosition.y, 0));
+                _objects[attractor] += _stepSize;
+                _phyllotaxisPosition = CalculatePhylllotaxis(_degree, _scale, _objects[attractor]);
+                attractor.SetTargetPosition(new Vector3(_phyllotaxisPosition.x, _phyllotaxisPosition.y, 0));
             }
-            //SetLerpPosition();
         }
     }
 
     // Use this for initialization
     void Start()
     {
+        //Dont run start from inherited class
+    }
 
+    private void UpdateAttractors()
+    {
+        var attractors = new List<MovingAttractor>(_objects.Keys);
+        foreach (MovingAttractor attractor in attractors)
+        {
+            Debug.Log("OTherSHit");
+            attractor.UpdateTreshhold(_audioTreshhold);
+            attractor.SetLerpMode(_lerpyScale);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateAttractors();
         if (_useLerping)
         {
             if (_isLerping)
@@ -94,7 +125,7 @@ public class GroupController : MonoBehaviour
                 _lerpPosSpeed = Mathf.Lerp(_lerpPosSpeedMinMax.x, _lerpPosSpeedMinMax.y, _lerpPosAnimCurve.Evaluate(AudioAnalyzer.bands[_lerpPosBand]));
                 _lerpPosTimer += Time.deltaTime * _lerpPosSpeed;
 
-                foreach (KeyValuePair<Creature, int> entry in _objects) {
+                foreach (KeyValuePair<MovingAttractor, int> entry in _objects) {
                     entry.Key.SetLerpSpeed(Mathf.Clamp01(_lerpPosTimer));
                     entry.Key.LerpToTarget();
                 }
@@ -105,12 +136,13 @@ public class GroupController : MonoBehaviour
                     _lerpPosTimer -= 1;
 
                     //_number += _stepSize;
-                    var creatures = new List<Creature>(_objects.Keys);
-                    foreach (Creature creature in creatures)
+                    var attractors = new List<MovingAttractor>(_objects.Keys);
+                    foreach (MovingAttractor attractor in attractors)
                     {
-                        _objects[creature] += _stepSize;
-                        _phyllotaxisPosition = CalculatePhylllotaxis(_degree, _scale, _objects[creature]);
-                        creature.SetTargetPosition(new Vector3(_phyllotaxisPosition.x, _phyllotaxisPosition.y, 0));
+                        //Debug.Log("blah blah");
+                        _objects[attractor] += _stepSize;
+                        _phyllotaxisPosition = CalculatePhylllotaxis(_degree, _scale, _objects[attractor]);
+                        attractor.SetTargetPosition(new Vector3(_phyllotaxisPosition.x, _phyllotaxisPosition.y, 0));
                     }
 
                     _currentIteration++;

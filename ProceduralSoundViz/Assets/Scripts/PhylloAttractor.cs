@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhylloAttractor : Attractor, IPhollyEffected {
+public class MovingAttractor : Attractor, IPhylloEffected {
 
     protected Vector3 _currentPos;
     protected Vector3 _targetPos;
     protected float _posLerpSpeed;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
+    
 	
 	// Update is called once per frame
 	void Update () {
