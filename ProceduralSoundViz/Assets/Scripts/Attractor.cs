@@ -41,6 +41,16 @@ public class Attractor : MonoBehaviour {
         CheckBandTreshHold();
 	}
 
+    public void UpdateTreshhold(float newTreshhold) {
+        _bandTreshhold = newTreshhold;
+    }
+
+    public void SetLerpMode(bool set) {
+        foreach (AffectedByGravity a in _soundObjects) {
+            a.SetLerpyScale(set);
+        }
+    }
+
     private void BounceObjects() {
         foreach (AffectedByGravity obj in _soundObjects) {
             obj.Scale(_bandOutput);
@@ -60,6 +70,7 @@ public class Attractor : MonoBehaviour {
             Vector3 randomDirection = new Vector3(transform.position.x + Random.Range(-3, 3), transform.position.y + Random.Range(-3, 3), transform.position.z + Random.Range(-3, 3));
             //EXPOSE SIZE IN EDITOR FOR MODIFICATION
             AffectedByGravity ab = AffectedByGravity.Create(randomDirection, 0.3f, transform, _material);
+            ab.transform.parent = transform;
             _soundObjects.Add(ab); 
         }
     }

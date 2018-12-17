@@ -11,8 +11,9 @@ public class AffectedByGravity : MonoBehaviour {
     protected float _size;
     protected Color _color = new Color(0, 0, 0);
     protected Color _soundColor;
-    protected Vector3 _maxSize = new Vector3(2, 2, 2);
+    protected float _maxSize = 1.5f;
     protected Vector3 _minSize;
+    protected bool _lerpyScale = true;
     // Use this for initialization
 
     public static AffectedByGravity Create(Vector3 pos, float size, Transform attractedTo, Material mat) {
@@ -36,7 +37,19 @@ public class AffectedByGravity : MonoBehaviour {
 	}
 
     public void Scale(float scaler) {
-        transform.localScale = Vector3.Lerp(_minSize, _maxSize, scaler);
+        //Mathf.Lerp(ls.y, 1 + (AudioAnalyzer.bands[i] * scale), Time.deltaTime * 3.0f);
+        //transform.localScale = Vector3.Lerp(_minSize, _maxSize, scaler);
+        if (_lerpyScale){
+            float newSize = Mathf.Lerp(transform.localScale.x, 1 + (scaler * _maxSize), Time.deltaTime * 10);
+            transform.localScale = new Vector3(newSize, newSize, newSize);
+        }
+        else {
+            transform.localScale = Vector3.Lerp(_minSize, new Vector3(_maxSize, _maxSize, _maxSize), scaler);
+        }
+    }
+
+    public void SetLerpyScale(bool set) {
+        _lerpyScale = set;
     }
 
     public void GravityOn() {

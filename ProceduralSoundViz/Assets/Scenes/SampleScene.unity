@@ -1353,15 +1353,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ffab0777fef3c6418fad03637a6a78f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attractorBands: 010000000300000004000000050000000100000001000000
+  _attractorBands: 010000000200000004000000040000000200000001000000
   _attractorAudioTreshHolds:
   - 0.5
-  - 0.2
   - 0.5
   - 0.5
   - 0.5
-  _attractorSpacing: 1.75
-  _objectsPerAttractor: 50
+  - 0.5
+  - 0.5
+  _attractorSpacing: 2.13
+  _objectsPerAttractor: 60
   _attractorsScale: 1.15
   _directionOfLayout: {x: 1, y: 0, z: 0}
   _gradient:
@@ -1393,6 +1394,8 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 5
     m_NumAlphaKeys: 2
+  _lerpyScale: 1
+  _audioTreshhold: 0
 --- !u!4 &1298831240
 Transform:
   m_ObjectHideFlags: 0
