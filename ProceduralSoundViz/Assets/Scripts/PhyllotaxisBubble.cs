@@ -6,22 +6,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroupController : MonoBehaviour
+public class PhyllotaxisBubble : Phyllotaxis
 {
-    
-    public Color _trailColor;
-    public GameObject _creature;
-    public int _startNumber;
-    public int _maxIteration;
-    public int _stepSize;
-
-    //Lerping
-    public bool _useLerping;
-    public Vector2 _lerpPosSpeedMinMax;
-    public AnimationCurve _lerpPosAnimCurve;
-    public int _lerpPosBand;
-    public float _scale;
-    public float _degree;
     [Range(1, 7)]
     public int _numOfObjects;
 
@@ -50,6 +36,7 @@ public class GroupController : MonoBehaviour
     public Vector3 _directionOfLayout;
     public Gradient _gradient;
     public bool _lerpyScale = false;
+    public bool _scalePhyllotaxisSize = true;
 
     public Vector2 _minMaxScale;
 
@@ -60,14 +47,6 @@ public class GroupController : MonoBehaviour
 
     private void Awake()
     {
-        /*
-        _trailRenderer = GetComponent<TrailRenderer>();
-        _trailMat = new Material(_trailRenderer.material);
-        _trailMat.SetColor("_TintColor", _trailColor);
-        _trailRenderer.material = _trailMat;
-        _number = _startNumber;
-        */
-        //transform.localPosition = CalculatePhylllotaxis(_degree, _scale, _number);
         _degreeDiff = (int)(360 / _degree / _numOfObjects);
         Debug.Log("DEGREE DIFF" + _degreeDiff);
         var n = _startNumber;
@@ -125,14 +104,17 @@ public class GroupController : MonoBehaviour
         {
             if (_isLerping)
             {
-                ///Change the scale
-                
-
                 _lerpPosSpeed = Mathf.Lerp(_lerpPosSpeedMinMax.x, _lerpPosSpeedMinMax.y, _lerpPosAnimCurve.Evaluate(AudioAnalyzer.bands[_lerpPosBand]));
                 _lerpPosTimer += Time.deltaTime * _lerpPosSpeed;
 
-                //_scale = Mathf.Lerp(_scale, _scale * 2, AudioAnalyzer.bands[_lerpPosBand] * Time.deltaTime);
-                _scale = Mathf.Lerp(_minMaxScale.x, 1 + (AudioAnalyzer.bands[_lerpPosBand]) * _minMaxScale.y, Time.deltaTime * 10f);
+                if (_scalePhyllotaxisSize)
+                {
+                    //_scale = Mathf.Lerp(_scale, _scale * 2, AudioAnalyzer.bands[_lerpPosBand] * Time.deltaTime);
+                    _scale = Mathf.Lerp(_minMaxScale.x, 1 + (AudioAnalyzer.bands[_lerpPosBand]) * _minMaxScale.y, Time.deltaTime * 10f);
+                }
+                else {
+                    _scale = _minMaxScale.x;
+                }
 
                 foreach (KeyValuePair<MovingAttractor, int> entry in _objects) {
                     entry.Key.SetLerpSpeed(Mathf.Clamp01(_lerpPosTimer));
@@ -155,8 +137,6 @@ public class GroupController : MonoBehaviour
                     }
 
                     _currentIteration++;
-
-                    //SetLerpPositions();
                 }
             }
         }
@@ -167,13 +147,6 @@ public class GroupController : MonoBehaviour
             _number += _stepSize;
             _currentIteration++;
         }
-    }
-
-    void SetLerpPosition()
-    { 
-        _phyllotaxisPosition = CalculatePhylllotaxis(_degree, _scale, _number);
-        _startPos = transform.localPosition;
-        _endPos = new Vector3(_phyllotaxisPosition.x, _phyllotaxisPosition.y, 0);
     }
 
     private Vector2 CalculatePhylllotaxis(float degree, float scale, int count)

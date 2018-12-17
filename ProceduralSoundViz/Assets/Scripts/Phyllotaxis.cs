@@ -4,32 +4,36 @@ using UnityEngine;
 
 public class Phyllotaxis : MonoBehaviour {
 
-    private Material _trailMat;
+    public float _scale;
+    public float _degree;
     public Color _trailColor;
-   // public GameObject _creature;
     public int _startNumber;
-    private int _number;
     public int _maxIteration;
     public int _stepSize;
-    private int _currentIteration;
-
-    //Lerping
-    public bool _useLerping;
-    private bool _isLerping;
-    private Vector3 _startPos, _endPos;
-    private float _lerpPosTimer, _lerpPosSpeed;
     public Vector2 _lerpPosSpeedMinMax;
     public AnimationCurve _lerpPosAnimCurve;
     public int _lerpPosBand;
+    public bool _useLerping;
 
-    public float _scale;
-    public float _degree;
-
+    private int _currentIteration;
+    private bool _isLerping;
+    private Vector3 _startPos, _endPos;
+    private float _lerpPosTimer, _lerpPosSpeed;
+    private Material _trailMat;
     private TrailRenderer _trailRenderer;
     private Vector2 _phyllotaxisPosition;
+    private int _number;
+
 
     private void Awake()
     {
+        
+        _trailRenderer = GetComponent<TrailRenderer>();
+        _trailMat = new Material(_trailRenderer.material);
+        _trailMat.SetColor("_TintColor", _trailColor);
+        _trailRenderer.material = _trailMat;
+        _number = _startNumber;
+        //transform.localPosition = CalculatePhylllotaxis(_degree, _scale, _number);
         _trailRenderer = GetComponent<TrailRenderer>();
         _trailMat = new Material(_trailRenderer.material);
         _trailMat.SetColor("_TintColor", _trailColor);
