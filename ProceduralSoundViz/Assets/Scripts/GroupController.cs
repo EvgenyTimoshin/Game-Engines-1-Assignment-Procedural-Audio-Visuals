@@ -51,6 +51,8 @@ public class GroupController : MonoBehaviour
     public Gradient _gradient;
     public bool _lerpyScale = false;
 
+    public Vector2 _minMaxScale;
+
     [Range(0, 1)]
     public float _audioTreshhold;
 
@@ -78,6 +80,7 @@ public class GroupController : MonoBehaviour
             newMaterial.color = color;
             MovingAttractor a = Attractor.Create<MovingAttractor> (_attractorsScale, _objectsPerAttractor, _attractorBands[i], _audioTreshhold, newMaterial);
             a.transform.localPosition = CalculatePhylllotaxis(_degree, _scale, _number);
+            a.transform.parent = transform;
             _objects.Add(a, n);
             n = n + _degreeDiff;
         }
@@ -89,7 +92,7 @@ public class GroupController : MonoBehaviour
             var attractors = new List<MovingAttractor>(_objects.Keys);
             foreach (MovingAttractor attractor in attractors)
             {
-                Debug.Log("blah blah");
+                //Debug.Log("blah blah");
                 _objects[attractor] += _stepSize;
                 _phyllotaxisPosition = CalculatePhylllotaxis(_degree, _scale, _objects[attractor]);
                 attractor.SetTargetPosition(new Vector3(_phyllotaxisPosition.x, _phyllotaxisPosition.y, 0));
@@ -108,7 +111,7 @@ public class GroupController : MonoBehaviour
         var attractors = new List<MovingAttractor>(_objects.Keys);
         foreach (MovingAttractor attractor in attractors)
         {
-            Debug.Log("OTherSHit");
+            //Debug.Log("OTherSHit");
             attractor.UpdateTreshhold(_audioTreshhold);
             attractor.SetLerpMode(_lerpyScale);
         }
@@ -122,8 +125,14 @@ public class GroupController : MonoBehaviour
         {
             if (_isLerping)
             {
+                ///Change the scale
+                
+
                 _lerpPosSpeed = Mathf.Lerp(_lerpPosSpeedMinMax.x, _lerpPosSpeedMinMax.y, _lerpPosAnimCurve.Evaluate(AudioAnalyzer.bands[_lerpPosBand]));
                 _lerpPosTimer += Time.deltaTime * _lerpPosSpeed;
+
+                //_scale = Mathf.Lerp(_scale, _scale * 2, AudioAnalyzer.bands[_lerpPosBand] * Time.deltaTime);
+                _scale = Mathf.Lerp(_minMaxScale.x, 1 + (AudioAnalyzer.bands[_lerpPosBand]) * _minMaxScale.y, Time.deltaTime * 10f);
 
                 foreach (KeyValuePair<MovingAttractor, int> entry in _objects) {
                     entry.Key.SetLerpSpeed(Mathf.Clamp01(_lerpPosTimer));

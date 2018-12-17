@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Attractor : MonoBehaviour {
 
-
     protected float _size;
     protected int _objectsCount;
     protected int _audioBand;
@@ -56,6 +55,7 @@ public class Attractor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //Debug.Log("Running");
         CheckBandTreshHold();
 	}
 
@@ -78,8 +78,9 @@ public class Attractor : MonoBehaviour {
 
     private void CheckBandTreshHold() {
         _bandOutput = AudioAnalyzer.bands[_audioBand];
+        //Debug.Log(_bandOutput);
         if (_bandOutput > _bandTreshhold) {
-            Debug.Log("BOUNCE");
+            //Debug.Log("BOUNCE");
             BounceObjects();
         }
     }

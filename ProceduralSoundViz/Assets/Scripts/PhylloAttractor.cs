@@ -8,12 +8,7 @@ public class MovingAttractor : Attractor, IPhylloEffected {
     protected Vector3 _targetPos;
     protected float _posLerpSpeed;
 
-    
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+   
 
     public void LerpToTarget()
     {
