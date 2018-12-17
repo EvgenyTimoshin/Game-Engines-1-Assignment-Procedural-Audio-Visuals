@@ -48,14 +48,17 @@ public class GroupController : MonoBehaviour
         */
         //transform.localPosition = CalculatePhylllotaxis(_degree, _scale, _number);
 
-        _degreeDiff = (int)(360 / _degree * _numOfObjects);
+        _degreeDiff = (int)(360 / _degree / _numOfObjects);
+        Debug.Log("DEGREE DIFF" + _degreeDiff);
+        var n = _startNumber;
+        //TODO CALCULATE BASED ON SIZE OF SCALE AND ALSO NUMBER OF OBJECTS
+        var segmentNumber = 3;
 
         for (int i = 0; i < _numOfObjects; i++)
         {
-            int n = (int)(_degree + _degreeDiff);
-            SphereWorm worm = Creature.Create<SphereWorm>(CalculatePhylllotaxis(n, _scale, _number), 1, 1);
+            SphereWorm worm = Creature.Create<SphereWorm>(CalculatePhylllotaxis(_degree, _scale, n), segmentNumber, 5);
             _objects.Add(worm, n);
-            _degreeDiff += _degreeDiff;
+            n = n + _degreeDiff;
         }
 
         if (_useLerping)
