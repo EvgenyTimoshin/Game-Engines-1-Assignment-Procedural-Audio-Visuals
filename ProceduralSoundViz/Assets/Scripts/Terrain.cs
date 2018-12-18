@@ -12,18 +12,37 @@ public class Terrain : MonoBehaviour {
     int[] _triangles;
     [Range(0,6)]
     public int _band;
+    public bool _movingInfinite = false;
+    public bool _preMade = false;
 
     public int xSize = 20;
     public int zSize = 20;
+
+    Color _defaultColor = new Color(0, 0, 0);
+    Color _lerpToColor = new Color(0, 255, 0);
+    Renderer _mat;
+
+    public static Terrain Create(int _xSize , int _zSize,bool infitinite, int band) {
+        Terrain t = new GameObject().AddComponent<Terrain>();
+        t._band = band;
+        t.xSize = _xSize;
+        t.zSize = _zSize;
+        t._movingInfinite = infitinite;
+        return t;
+    }
 
     // Use this for initialization
     void Start () {
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
         CreateShape();
-        transform.position = new Vector3(-(xSize / 2), -15, 0);
+        transform.position = new Vector3(-(xSize / 2), -200, -300);
         UpdateMesh();
-        StartCoroutine(IncreaseTerrainSize());
+        if (_movingInfinite) {
+            StartCoroutine(IncreaseTerrainSize());
+        }
+        
+        _mat = GetComponent<Renderer>();
     }
 
 
@@ -31,10 +50,20 @@ public class Terrain : MonoBehaviour {
     void Update()
     {
         UpdateMesh();
-        _mainCam.transform.position = Vector3.Lerp(new Vector3(_mainCam.transform.position.x, 0, _mainCam.transform.position.z),
-            new Vector3(_mainCam.transform.position.x, AudioAnalyzer.bands[_band]*1000, zSize - 150), Time.deltaTime);
-        //zSize += 1;
-        _cameraSpeed = 0.2f - (AudioAnalyzer.bands[_band]);
+
+        if (_mainCam)
+        {
+            _mainCam.transform.position = Vector3.Lerp(new Vector3(_mainCam.transform.position.x, 0, _mainCam.transform.position.z),
+                new Vector3(_mainCam.transform.position.x, AudioAnalyzer.bands[_band] * 1000, zSize - 150), Time.deltaTime);
+            //zSize += 1;
+            _cameraSpeed = 0.2f - (AudioAnalyzer.bands[_band]);
+        }
+
+       
+        Color lerpColor = Color.Lerp(_defaultColor, _lerpToColor, AudioAnalyzer.bands[_band] / 400);
+
+        _mat.material.color = lerpColor;
+        Debug.Log(lerpColor + "  +    " + _mat.material.color);
     }
 
     IEnumerator IncreaseTerrainSize() {
