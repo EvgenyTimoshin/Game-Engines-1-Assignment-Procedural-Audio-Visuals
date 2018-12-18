@@ -5,7 +5,8 @@ using UnityEngine;
 public class Terrain : MonoBehaviour {
 
     Mesh _mesh;
-    Vector3[] _verticies;
+    //Vector3[] _verticies;
+    List<Vector3> _verticies = new List<Vector3>();
     int[] _triangles;
     [Range(0,6)]
     public int _band;
@@ -31,17 +32,35 @@ public class Terrain : MonoBehaviour {
 
 
     void CreateShape() {
-        _verticies = new Vector3[(xSize + 1) * (zSize + 1)];
+        //_verticies = new Vector3[(xSize + 1) * (zSize + 1)];
+        var verticiesLenght = (xSize + 1) * (zSize + 1);
 
-        
-        for (int i = 0,z = 0; z < zSize; z++) {
+       
+        for (int i = 0, z = 0; z < zSize; z++) {
 
             for (int x = 0; x <= xSize; x++) {
                 float y = Mathf.PerlinNoise(x * .3f, z * .3f) * 2f;
-                _verticies[i] = new Vector3(x, y, z);
+                //_verticies[i] = new Vector3(x, y, z);
+                _verticies.Add(new Vector3(x, y, z));
                 i++;
             }
         }
+
+        Debug.Log("Original COunt :" + _verticies.Count);
+        Debug.Log("Difference between 2 : " + (verticiesLenght - _verticies.Count));
+        var fill = verticiesLenght - _verticies.Count;
+
+        for (int i = 0; i < fill; i++) {
+            _verticies.Add(new Vector3(0, 0, 0));
+        }
+
+        Debug.Log("Count of Verticies : " + _verticies.Count + "But meant to be : " + verticiesLenght );
+
+        /*
+        Debug.Log("Count of Verticies : " + _verticies.Length);
+        for (int i = 0; i < _verticies.Length; i++) {
+            Debug.Log(i + " Vector3 : " + _verticies[i]);
+        }*/
 
         _triangles = new int[xSize * zSize * 6];
 
@@ -72,6 +91,46 @@ public class Terrain : MonoBehaviour {
 
         var AudioSample = AudioAnalyzer.bands[_band];
 
+        _verticies.Clear();
+        var verticiesLenght = (xSize + 1) * (zSize + 1);
+
+        /*
+        for (int i = 0, z = 0; z < zSize; z++)
+        {
+
+            for (int x = 0; x <= xSize; x++)
+            {
+                float y = Mathf.PerlinNoise(x * .3f, z * .3f) * 2f;
+                //_verticies[i] = new Vector3(x, y, z);
+                _verticies.Add(new Vector3(x, y, z));
+                i++;
+            }
+        }*/
+
+        for (int i = 0, z = 0; z < zSize; z++)
+        {
+            for (int x = 0; x <= xSize; x++)
+            {
+                //Vector3 vertex = _verticies[i];
+
+                float y = Mathf.PerlinNoise(x * AudioSample, z * AudioSample) * 2f;
+                //vertex.y = Mathf.Lerp(vertex.y, 1 + y * 5, Time.deltaTime * 2f);
+                //_verticies[i] = new Vector3(x, y, z);
+                _verticies.Add(new Vector3(x, y, z));
+                //_verticies[i] = vertex;
+                i++;
+            }
+        }
+
+        //Debug.Log("Original COunt :" + _verticies.Count);
+        //Debug.Log("Difference between 2 : " + (verticiesLenght - _verticies.Count));
+        var fill = verticiesLenght - _verticies.Count;
+
+        for (int i = 0; i < fill; i++)
+        {
+            _verticies.Add(new Vector3(0, 0, 0));
+        }
+        /*
         //_verticies = new Vector3[(xSize + 1) * (zSize + 1)];
 
         for (int i = 0, z = 0; z < zSize; z++)
@@ -88,6 +147,7 @@ public class Terrain : MonoBehaviour {
                 i++;
             }
         }
+        */
 
         _triangles = new int[xSize * zSize * 6];
 
@@ -114,7 +174,7 @@ public class Terrain : MonoBehaviour {
         }
 
         _mesh.Clear();
-        _mesh.vertices = _verticies;
+        _mesh.vertices = _verticies.ToArray();
         _mesh.triangles = _triangles;
 
         _mesh.RecalculateNormals();
@@ -126,7 +186,7 @@ public class Terrain : MonoBehaviour {
             return;
         }
 
-        for (int i = 0; i < _verticies.Length; i++) {
+        for (int i = 0; i < _verticies.Count; i++) {
             Gizmos.DrawSphere(_verticies[i], .1f);
         }
     }
