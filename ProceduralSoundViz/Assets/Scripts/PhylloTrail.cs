@@ -7,11 +7,16 @@ public class PhylloTrail : MonoBehaviour, IPhylloEffected {
     protected Vector3 _currentPos;
     protected Vector3 _targetPos;
     protected float _posLerpSpeed;
+    private TrailRenderer _trailRenderer;
+    private Material _trailMat;
 
 
-    public static PhylloTrail Create() {
+    public static PhylloTrail Create(Color color) {
         PhylloTrail pT = new GameObject().AddComponent<PhylloTrail>();
-
+        pT._trailRenderer = pT.gameObject.AddComponent<TrailRenderer>();
+        pT._trailMat = new Material(pT._trailRenderer.material);
+        pT._trailMat.color = color;
+        pT._trailRenderer.material = pT._trailMat;
 
         return pT;
     }
@@ -24,6 +29,11 @@ public class PhylloTrail : MonoBehaviour, IPhylloEffected {
 	void Update () {
 		
 	}
+
+    public void SetTrailLifeTime(float time)
+    {
+        _trailRenderer.time = time;
+    }
 
     public void LerpToTarget()
     {
