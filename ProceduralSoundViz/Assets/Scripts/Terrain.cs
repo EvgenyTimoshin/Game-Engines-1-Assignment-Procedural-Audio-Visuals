@@ -56,12 +56,6 @@ public class Terrain : MonoBehaviour {
 
         Debug.Log("Count of Verticies : " + _verticies.Count + "But meant to be : " + verticiesLenght );
 
-        /*
-        Debug.Log("Count of Verticies : " + _verticies.Length);
-        for (int i = 0; i < _verticies.Length; i++) {
-            Debug.Log(i + " Vector3 : " + _verticies[i]);
-        }*/
-
         _triangles = new int[xSize * zSize * 6];
 
         int vert = 0;
@@ -90,64 +84,37 @@ public class Terrain : MonoBehaviour {
     void UpdateMesh() {
 
         var AudioSample = AudioAnalyzer.bands[_band];
-
+        List<Vector3> _oldVerticies = new List<Vector3>(_verticies);
         _verticies.Clear();
         var verticiesLenght = (xSize + 1) * (zSize + 1);
 
-        /*
-        for (int i = 0, z = 0; z < zSize; z++)
-        {
-
-            for (int x = 0; x <= xSize; x++)
-            {
-                float y = Mathf.PerlinNoise(x * .3f, z * .3f) * 2f;
-                //_verticies[i] = new Vector3(x, y, z);
-                _verticies.Add(new Vector3(x, y, z));
-                i++;
-            }
-        }*/
-
         for (int i = 0, z = 0; z < zSize; z++)
         {
             for (int x = 0; x <= xSize; x++)
             {
-                //Vector3 vertex = _verticies[i];
+                float y;
+                Vector3 vertex;
 
-                float y = Mathf.PerlinNoise(x * AudioSample, z * AudioSample) * 2f;
-                //vertex.y = Mathf.Lerp(vertex.y, 1 + y * 5, Time.deltaTime * 2f);
-                //_verticies[i] = new Vector3(x, y, z);
-                _verticies.Add(new Vector3(x, y, z));
-                //_verticies[i] = vertex;
+                if (i < _oldVerticies.Count){
+                    vertex = _oldVerticies[i];
+                    y = Mathf.PerlinNoise(x * AudioSample, z * AudioSample) * 2f;
+                    vertex.y = Mathf.Lerp(vertex.y, 1 + y * 5, Time.deltaTime * 2f);
+                    _verticies.Add(new Vector3(x,vertex.y,z));
+                }
+                else{
+                    y = Mathf.PerlinNoise(x * AudioSample, z * AudioSample) * 2f;
+                    _verticies.Add(new Vector3(x, y, z));
+                    
+                }
                 i++;
             }
         }
-
-        //Debug.Log("Original COunt :" + _verticies.Count);
-        //Debug.Log("Difference between 2 : " + (verticiesLenght - _verticies.Count));
         var fill = verticiesLenght - _verticies.Count;
 
         for (int i = 0; i < fill; i++)
         {
             _verticies.Add(new Vector3(0, 0, 0));
         }
-        /*
-        //_verticies = new Vector3[(xSize + 1) * (zSize + 1)];
-
-        for (int i = 0, z = 0; z < zSize; z++)
-        {
-
-            for (int x = 0; x <= xSize; x++)
-            {
-                Vector3 vertex = _verticies[i];
-
-                float y = Mathf.PerlinNoise(x * AudioSample, z * AudioSample) * 2f;
-                vertex.y = Mathf.Lerp(vertex.y, 1 + y * 5, Time.deltaTime * 2f);
-                //_verticies[i] = new Vector3(x, y, z);
-                _verticies[i] = vertex;
-                i++;
-            }
-        }
-        */
 
         _triangles = new int[xSize * zSize * 6];
 
