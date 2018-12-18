@@ -22,12 +22,19 @@ public class Terrain : MonoBehaviour {
     Color _lerpToColor = new Color(0, 255, 0);
     Renderer _mat;
 
-    public static Terrain Create(int _xSize , int _zSize,bool infitinite, int band) {
+    public static Terrain Create(int _xSize , int _zSize,bool infitinite,bool predmade, int band) {
         Terrain t = new GameObject().AddComponent<Terrain>();
         t._band = band;
         t.xSize = _xSize;
         t.zSize = _zSize;
         t._movingInfinite = infitinite;
+        t.gameObject.AddComponent<MeshRenderer>();
+        t.gameObject.AddComponent<MeshFilter>();
+        t._mat = t.GetComponent<Renderer>();
+        t._preMade = predmade;
+        //SetupMaterial A new instance
+        Material newMat = new Material(Shader.Find("Transparent/Diffuse"));
+        t._mat.material = newMat;
         return t;
     }
 
@@ -36,7 +43,10 @@ public class Terrain : MonoBehaviour {
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
         CreateShape();
-        transform.position = new Vector3(-(xSize / 2), -200, -300);
+        if (!_preMade)
+        {
+            transform.position = new Vector3(-(xSize / 2), -200, -300);
+        }
         UpdateMesh();
         if (_movingInfinite) {
             StartCoroutine(IncreaseTerrainSize());
@@ -60,10 +70,10 @@ public class Terrain : MonoBehaviour {
         }
 
        
-        Color lerpColor = Color.Lerp(_defaultColor, _lerpToColor, AudioAnalyzer.bands[_band] / 400);
+        Color lerpColor = Color.Lerp(_defaultColor, _lerpToColor, AudioAnalyzer.bands[_band] / 100);
 
         _mat.material.color = lerpColor;
-        Debug.Log(lerpColor + "  +    " + _mat.material.color);
+        //Debug.Log(lerpColor + "  +    " + _mat.material.color);
     }
 
     IEnumerator IncreaseTerrainSize() {
@@ -191,6 +201,7 @@ public class Terrain : MonoBehaviour {
         _mesh.RecalculateNormals();
     }
 
+    /*
     private void OnDrawGizmos()
     {
         if (_verticies == null) {
@@ -201,5 +212,6 @@ public class Terrain : MonoBehaviour {
             Gizmos.DrawSphere(_verticies[i], .1f);
         }
     }
+    */
 
 }

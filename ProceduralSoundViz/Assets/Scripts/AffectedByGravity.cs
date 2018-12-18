@@ -45,7 +45,7 @@ public class AffectedByGravity : MonoBehaviour {
             transform.localScale = new Vector3(newSize, newSize, newSize);
         }
         else {
-            transform.localScale = Vector3.Lerp(_minSize, new Vector3(_maxSize, _maxSize, _maxSize), scaler);
+            transform.localScale = Vector3.Lerp(_minSize, new Vector3(_maxSize, _maxSize, _maxSize), scaler*2);
         }
     }
 
