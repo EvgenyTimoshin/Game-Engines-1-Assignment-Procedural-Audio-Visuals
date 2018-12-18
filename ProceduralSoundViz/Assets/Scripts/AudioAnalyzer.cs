@@ -17,16 +17,6 @@ public class AudioAnalyzer : MonoBehaviour
     public float binWidth;
     public float sampleRate;
 
-    /*
-     * 20-60 - Subbase
-     * 60-250 - Bass
-     * 250-500 - Low midrange
-     * 500 - 2Khz - Midrange
-     * 2Khz - 4Khz - Upper midrange
-     * 4Khz - 6Khz - Presence
-     * 6Khz - 20Khz - Brilliance
-     */
-
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();

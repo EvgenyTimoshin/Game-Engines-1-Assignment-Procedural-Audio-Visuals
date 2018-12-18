@@ -81,36 +81,6 @@ public class Phyllotaxis : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
-    /*
-	void Update () {
-        ScalePolytaxisSize();
-        if (_useLerping)
-        {
-            if (_isLerping)
-            {
-                _lerpPosSpeed = Mathf.Lerp(_lerpPosSpeedMinMax.x, _lerpPosSpeedMinMax.y, _lerpPosAnimCurve.Evaluate(AudioAnalyzer.bands[_lerpPosBand]));
-                _lerpPosTimer += Time.deltaTime * _lerpPosSpeed;
-                transform.localPosition = Vector3.Lerp(_startPos,_endPos, Mathf.Clamp01(_lerpPosTimer));
-
-                if (_lerpPosTimer >= 1) {
-                    _lerpPosTimer -= 1;
-                    _number += _stepSize;
-                    _currentIteration++;
-                    SetLerpPositions();
-                }
-            }
-        }
-        if(!_useLerping)
-        {
-            _phyllotaxisPosition = CalculatePhylllotaxis(_degree, _scale, _number);
-            transform.localPosition = new Vector3(_phyllotaxisPosition.x, _phyllotaxisPosition.y, transform.position.z);
-            _number += _stepSize;
-            _currentIteration++;
-        }
-    }
-    */
-
 
     protected void SetLerpPositions() {
         _phyllotaxisPosition = CalculatePhylllotaxis(_degree, _scale, _number);
