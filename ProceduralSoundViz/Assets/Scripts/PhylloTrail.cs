@@ -17,7 +17,8 @@ public class PhylloTrail : MonoBehaviour, IPhylloEffected {
         pT._trailMat = new Material(pT._trailRenderer.material);
         pT._trailMat.color = color;
         pT._trailRenderer.material = pT._trailMat;
-
+        pT._trailRenderer.material.EnableKeyword("_EMISSION");
+        pT._trailRenderer.material.SetColor("_EmissionColor", color);
         return pT;
     }
     // Use this for initialization

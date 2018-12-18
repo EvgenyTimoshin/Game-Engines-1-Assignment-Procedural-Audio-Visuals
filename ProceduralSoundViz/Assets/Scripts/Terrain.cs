@@ -14,6 +14,7 @@ public class Terrain : MonoBehaviour {
     public int _band;
     public bool _movingInfinite = false;
     public bool _preMade = false;
+    public bool _moveEverythingWithMovement = false;
 
     public int xSize = 20;
     public int zSize = 20;
@@ -63,13 +64,20 @@ public class Terrain : MonoBehaviour {
 
         if (_mainCam)
         {
-            _mainCam.transform.position = Vector3.Lerp(new Vector3(_mainCam.transform.position.x, 0, _mainCam.transform.position.z),
-                new Vector3(_mainCam.transform.position.x, AudioAnalyzer.bands[_band] * 1000, zSize-200), Time.deltaTime);
+            // Camera bob AudioAnalyzer.bands[_band] * 1000
+            _mainCam.transform.position = Vector3.Lerp(new Vector3(_mainCam.transform.position.x, 5, _mainCam.transform.position.z),
+                new Vector3(_mainCam.transform.position.x, 5, (transform.position.z + zSize)-200), Time.deltaTime);
+
+
             //zSize += 1;
             _cameraSpeed = 0.2f - (AudioAnalyzer.bands[_band]);
         }
 
-       
+        if (_moveEverythingWithMovement)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1f);
+        }
+
         Color lerpColor = Color.Lerp(_defaultColor, _lerpToColor, AudioAnalyzer.bands[_band] / 100);
 
         _mat.material.color = lerpColor;
@@ -79,7 +87,7 @@ public class Terrain : MonoBehaviour {
     IEnumerator IncreaseTerrainSize() {
         while (true) {
             zSize += 1;
-
+            
             yield return new WaitForSeconds(_cameraSpeed);
         }
     }
