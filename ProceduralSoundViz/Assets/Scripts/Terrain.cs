@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Terrain : MonoBehaviour {
 
-    public Camera _mainCam;
+    public GameObject _mainCam;
     public float _cameraSpeed = 1f;
     Mesh _mesh;
     //Vector3[] _verticies;

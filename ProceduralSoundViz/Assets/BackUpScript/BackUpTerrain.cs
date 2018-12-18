@@ -5,7 +5,7 @@ using UnityEngine;
 public class BackUpTerrain : MonoBehaviour
 {
 
-    public Camera _mainCam;
+    public GameObject _mainCam;
     public float _cameraSpeed = 1f;
     Mesh _mesh;
     //Vector3[] _verticies;
@@ -33,10 +33,13 @@ public class BackUpTerrain : MonoBehaviour
     void Update()
     {
         UpdateMesh();
-        _mainCam.transform.position = Vector3.Lerp(new Vector3(_mainCam.transform.position.x, 0, _mainCam.transform.position.z),
-            new Vector3(_mainCam.transform.position.x, AudioAnalyzer.bands[_band] * 1000, zSize - 150), Time.deltaTime/2f);
-        //zSize += 1;
-        _cameraSpeed = 0.2f - (AudioAnalyzer.bands[_band]);
+        if (_mainCam)
+        {
+            _mainCam.transform.position = Vector3.Lerp(new Vector3(_mainCam.transform.position.x, 0, _mainCam.transform.position.z),
+                new Vector3(_mainCam.transform.position.x, AudioAnalyzer.bands[_band] * 1000, zSize - 150), Time.deltaTime / 2f);
+            //zSize += 1;
+            _cameraSpeed = 0.2f - (AudioAnalyzer.bands[_band]);
+        }
     }
 
     IEnumerator IncreaseTerrainSize()
@@ -107,7 +110,7 @@ public class BackUpTerrain : MonoBehaviour
 
     void UpdateMesh()
     {
-        /*
+        
         var AudioSample = AudioAnalyzer.bands[_band];
         List<Vector3> _oldVerticies = new List<Vector3>(_verticies);
         _verticies.Clear();
@@ -166,7 +169,7 @@ public class BackUpTerrain : MonoBehaviour
             vert++;
 
         }
-        */
+        
 
         _mesh.Clear();
         _mesh.vertices = _verticies.ToArray();
