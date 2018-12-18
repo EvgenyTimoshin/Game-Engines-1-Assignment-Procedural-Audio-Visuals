@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Terrain : MonoBehaviour {
 
+    public Camera _mainCam;
+    public float _cameraSpeed = 1f;
     Mesh _mesh;
     //Vector3[] _verticies;
     List<Vector3> _verticies = new List<Vector3>();
@@ -18,16 +20,29 @@ public class Terrain : MonoBehaviour {
     void Start () {
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
-
         CreateShape();
-       
-	}
+        transform.position = new Vector3(-(xSize / 2), -15, 0);
+        UpdateMesh();
+        StartCoroutine(IncreaseTerrainSize());
+    }
 
 
     // Update is called once per frame
     void Update()
     {
         UpdateMesh();
+        _mainCam.transform.position = Vector3.Lerp(new Vector3(_mainCam.transform.position.x, 0, _mainCam.transform.position.z),
+            new Vector3(_mainCam.transform.position.x, AudioAnalyzer.bands[_band]*1000, zSize - 150), Time.deltaTime);
+        //zSize += 1;
+        _cameraSpeed = 0.2f - (AudioAnalyzer.bands[_band]);
+    }
+
+    IEnumerator IncreaseTerrainSize() {
+        while (true) {
+            zSize += 1;
+
+            yield return new WaitForSeconds(_cameraSpeed);
+        }
     }
 
 

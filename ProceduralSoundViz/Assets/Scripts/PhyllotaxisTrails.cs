@@ -5,7 +5,7 @@ using UnityEngine;
 public class PhyllotaxisTrails : Phyllotaxis {
 
     public Gradient _gradient;
-    [Range(0,3)]
+    [Range(0,10)]
     public float _trailTime;
     private List<GameObject> _trails = new List<GameObject>();
     //private Dictionary<GameObject, int> _trailObjs = new Dictionary<GameObject, int>();
