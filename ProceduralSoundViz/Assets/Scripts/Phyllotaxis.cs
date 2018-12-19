@@ -52,6 +52,35 @@ public class Phyllotaxis : MonoBehaviour {
     void Start () {
 		
 	}
+
+    private void FixedUpdate()
+    {
+        UpdateObjects();
+        ScalePolytaxisSize();
+        if (_useLerping)
+        {
+            if (_isLerping)
+            {
+                UpdateLerpTimer();
+                LerpObjsToTarget();
+
+                if (_lerpPosTimer >= 1)
+                {
+                    _lerpPosTimer -= 1;
+                    SetNewTargetPoses();
+                    _currentIteration++;
+                }
+            }
+        }
+        if (!_useLerping)
+        {
+            _phyllotaxisPosition = CalculatePhylllotaxis(_degree, _scale, _number);
+            transform.localPosition = new Vector3(_phyllotaxisPosition.x, _phyllotaxisPosition.y, transform.position.z);
+            _number += _stepSize;
+            _currentIteration++;
+        }
+    }
+    /*
     // Update is called once per frame
     void Update()
     {
@@ -80,6 +109,7 @@ public class Phyllotaxis : MonoBehaviour {
             _currentIteration++;
         }
     }
+    */
 
 
     protected void SetLerpPositions() {

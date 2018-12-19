@@ -36,11 +36,18 @@ public class Attractor : MonoBehaviour {
         CreateSoundReactiveObjects();
 	}
 	
+    /*
 	// Update is called once per frame
 	void Update () {
         //Debug.Log("Running");
         CheckBandTreshHold();
 	}
+    */
+
+    private void FixedUpdate()
+    {
+        CheckBandTreshHold();
+    }
 
     public void UpdateChildrenBubbles(float strenght, bool emissionLerp, bool lerpMode) {
         foreach (AffectedByGravity a in _soundObjects)

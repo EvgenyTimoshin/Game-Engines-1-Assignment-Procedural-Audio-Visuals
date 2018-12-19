@@ -64,7 +64,10 @@ public class AffectedByGravity : MonoBehaviour {
         }
         else
         {
-            _rend.material.color = _soundColor;
+            if (_rend)
+            {
+                _rend.material.color = _soundColor;
+            }
         }
     }
 
@@ -87,9 +90,24 @@ public class AffectedByGravity : MonoBehaviour {
     public void SetEmissionLerpStrenght(float strenght) {
         _emmisionLerpStrenght = strenght;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void FixedUpdate()
+    {
+        if (_attractedTo)
+        {
+            Vector3 dir = _attractedTo.transform.position - transform.position;
+            _rb.AddForce(_attractionStrenght * dir);
+
+            if (_rb.velocity.magnitude > _maxPower)
+            {
+                _rb.velocity = _rb.velocity.normalized * _maxPower;
+            }
+        }
+    }
+
+    // Update is called once per frame
+    /*
+    void Update () {
         if (_attractedTo) {
             Vector3 dir = _attractedTo.transform.position - transform.position;
             _rb.AddForce(_attractionStrenght * dir);
@@ -100,4 +118,5 @@ public class AffectedByGravity : MonoBehaviour {
         }
 		
 	}
+    */
 }

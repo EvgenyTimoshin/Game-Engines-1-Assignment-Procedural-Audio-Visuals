@@ -23,8 +23,6 @@ public class AudioAnalyzer : MonoBehaviour
         spectrum = new float[frameSize];
         bands = new float[(int)Mathf.Log(frameSize, 2)];
 
-       
-       
         audioSource.clip = clip;
         audioSource.outputAudioMixerGroup = amgMaster;
 
@@ -58,7 +56,15 @@ public class AudioAnalyzer : MonoBehaviour
     }
 
     // Update is called once per frame
+    /*
     void Update()
+    {
+        audioSource.GetSpectrumData(spectrum, 0, FFTWindow.Blackman);
+        GetFrequencyBands();
+    }
+    */
+
+    private void FixedUpdate()
     {
         audioSource.GetSpectrumData(spectrum, 0, FFTWindow.Blackman);
         GetFrequencyBands();
