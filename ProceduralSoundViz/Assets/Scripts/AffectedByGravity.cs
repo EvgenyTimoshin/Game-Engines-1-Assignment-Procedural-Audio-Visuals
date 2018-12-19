@@ -14,6 +14,8 @@ public class AffectedByGravity : MonoBehaviour {
     protected float _maxSize;
     protected Vector3 _minSize;
     protected bool _lerpyScale = true;
+    protected bool _emissionLerping = false;
+    private Renderer _rend;
     // Use this for initialization
 
     public static AffectedByGravity Create(Vector3 pos, float size, Transform attractedTo, Material mat) {
@@ -26,16 +28,22 @@ public class AffectedByGravity : MonoBehaviour {
         ab._maxSize = size * 4;
         ab._attractedTo = attractedTo;
         ab.transform.position = pos;
-        ab.GetComponent<Renderer>().material = mat;
+        var rend = ab.GetComponent<Renderer>();
+        rend.material = new Material(rend.material);
+        rend.material.color = ab._color;
+        rend.material.EnableKeyword("_EMISSION");
         ab._soundColor = mat.color;
+        rend.material.SetColor("_EmissionColor", ab._color);
         ab._minSize = ab.transform.localScale;
-
         return ab;
     }
 
 	void Start () {
         _rb = GetComponent<Rigidbody>();
-	}
+        _rend = GetComponent<Renderer>();
+        _rend.material.EnableKeyword("_EMISSION");
+        //GetComponent<Material>().EnableKeyword("_EMISSION");
+    }
 
     public void Scale(float scaler) {
         //Mathf.Lerp(ls.y, 1 + (AudioAnalyzer.bands[i] * scale), Time.deltaTime * 3.0f);
@@ -45,8 +53,22 @@ public class AffectedByGravity : MonoBehaviour {
             transform.localScale = new Vector3(newSize, newSize, newSize);
         }
         else {
-            transform.localScale = Vector3.Lerp(_minSize, new Vector3(_maxSize, _maxSize, _maxSize), scaler*2);
+            transform.localScale = Vector3.Lerp(_minSize, new Vector3(_maxSize, _maxSize, _maxSize), scaler*2);   
         }
+
+        if (_emissionLerping){
+            _rend.material.color = _color;
+            Color newEmiitedColor = Color.Lerp(_color, _soundColor, scaler * 7);
+            _rend.material.SetColor("_EmissionColor", newEmiitedColor);
+        }
+        else
+        {
+            _rend.material.color = _soundColor;
+        }
+    }
+
+    public void SetEmissionLepring(bool set) {
+        _emissionLerping = set;
     }
 
     public void SetLerpyScale(bool set) {

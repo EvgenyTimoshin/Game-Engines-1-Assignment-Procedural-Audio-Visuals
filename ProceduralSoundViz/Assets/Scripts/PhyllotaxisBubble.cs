@@ -21,6 +21,7 @@ public class PhyllotaxisBubble : Phyllotaxis
     public float _attractorsScale;
     public Gradient _gradient;
     public bool _lerpyScale = false;
+    public bool _emissionLerping = false;
 
     [Range(0, 1)]
     public float _audioTreshhold;
@@ -34,8 +35,9 @@ public class PhyllotaxisBubble : Phyllotaxis
         {
             float step = 1.0f / _attractorBands.Length;
             Color color = _gradient.Evaluate(step * i);
-            Material newMaterial = new Material(Shader.Find("Transparent/Diffuse"));
+            Material newMaterial = new Material(Shader.Find("Standard"));
             newMaterial.color = color;
+            newMaterial.EnableKeyword("_EMISSION");
 
             MovingAttractor a = Attractor.Create<MovingAttractor> (_attractorsScale, _objectsPerAttractor, _attractorBands[i], _audioTreshhold, newMaterial);
             a.transform.localPosition = CalculatePhylllotaxis(_degree, _scale, _number);
@@ -61,6 +63,7 @@ public class PhyllotaxisBubble : Phyllotaxis
         {
             attractor.UpdateTreshhold(_audioTreshhold);//unique
             attractor.SetLerpMode(_lerpyScale);
+            attractor.SetEmissionLerpMode(_emissionLerping);
         }
     }
 

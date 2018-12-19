@@ -46,6 +46,13 @@ public class Attractor : MonoBehaviour {
         _bandTreshhold = newTreshhold;
     }
 
+    public void SetEmissionLerpMode(bool set){
+        foreach (AffectedByGravity a in _soundObjects)
+        {
+            a.SetEmissionLepring(set);
+        }
+    }
+
     public void SetLerpMode(bool set) {
         foreach (AffectedByGravity a in _soundObjects) {
             a.SetLerpyScale(set);
