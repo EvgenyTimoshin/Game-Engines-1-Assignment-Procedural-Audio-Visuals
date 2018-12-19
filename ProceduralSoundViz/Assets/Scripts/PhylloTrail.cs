@@ -27,7 +27,7 @@ public class PhylloTrail : MonoBehaviour, IPhylloEffected {
     }
     // Use this for initialization
     void Start () {
-		
+        _trailRenderer = GetComponent<TrailRenderer>();
 	}
 	
 	// Update is called once per frame
@@ -68,5 +68,10 @@ public class PhylloTrail : MonoBehaviour, IPhylloEffected {
     public void SetTargetPosition(Vector3 newEndPos)
     {
         _targetPos = newEndPos;
+    }
+
+    public void SetTrailSizes(AnimationCurve curve) {
+        _trailRenderer.widthCurve = curve;
+        _trailRenderer.widthMultiplier = 1;
     }
 }

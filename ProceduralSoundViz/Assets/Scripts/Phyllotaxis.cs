@@ -9,7 +9,6 @@ public class Phyllotaxis : MonoBehaviour {
 
     public float _scale;
     public float _degree;
-    public Color _trailColor;
     public int _startNumber;
     public int _maxIteration;
     public int _stepSize;
@@ -45,7 +44,7 @@ public class Phyllotaxis : MonoBehaviour {
         _trailRenderer = GetComponent<TrailRenderer>();
         _trailMat = new Material(_trailRenderer.material);
         //_trailMat.SetColor("_TintColor", _trailColor);
-        _trailMat.color = _trailColor;
+        //_trailMat.color = _trailColor;
         _trailRenderer.material = _trailMat;
         _number = _startNumber;
         transform.localPosition = CalculatePhylllotaxis(_degree, _scale, _number);

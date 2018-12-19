@@ -10,9 +10,20 @@ public class PhyllotaxisTrails : Phyllotaxis {
     private List<GameObject> _trails = new List<GameObject>();
     //private Dictionary<GameObject, int> _trailObjs = new Dictionary<GameObject, int>();
     private Dictionary<GameObject, Vector3> _trailTargetPos = new Dictionary<GameObject, Vector3>();
+    public AnimationCurve _trailsSizes;
     // Use this for initialization
     void Awake()
     {
+        if (_trailsSizes.keys.Length <= 0)
+        {
+            Keyframe[] animKeys = new Keyframe[2];
+            animKeys[0].time = 0;
+            animKeys[0].value = 1;
+            animKeys[1].time = 1;
+            animKeys[1].value = 1;
+
+            _trailsSizes.keys = animKeys;
+        }
         _degreeDiff = GetDegreeDiff(_numOfObjects);
         var n = _startNumber;
 
@@ -50,6 +61,7 @@ public class PhyllotaxisTrails : Phyllotaxis {
         foreach (PhylloTrail t in trails)
         {
             t.SetTrailLifeTime(_trailTime);
+            t.SetTrailSizes(_trailsSizes);
         }
     }
 }

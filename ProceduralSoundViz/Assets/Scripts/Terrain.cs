@@ -87,7 +87,7 @@ public class Terrain : MonoBehaviour {
             transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1f);
         }
 
-        Color lerpColor = Color.Lerp(_defaultColor, _lerpToColor, AudioAnalyzer.bands[_band] / 100);
+        Color lerpColor = Color.Lerp(_defaultColor, _lerpToColor, AudioAnalyzer.bands[_band] / 20);
 
         _mat.material.color = lerpColor;
         //Debug.Log(lerpColor + "  +    " + _mat.material.color);
