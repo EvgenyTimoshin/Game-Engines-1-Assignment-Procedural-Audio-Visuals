@@ -16,6 +16,7 @@ public class AffectedByGravity : MonoBehaviour {
     protected bool _lerpyScale = true;
     protected bool _emissionLerping = false;
     private Renderer _rend;
+    private float _emmisionLerpStrenght;
     // Use this for initialization
 
     public static AffectedByGravity Create(Vector3 pos, float size, Transform attractedTo, Material mat) {
@@ -58,7 +59,7 @@ public class AffectedByGravity : MonoBehaviour {
 
         if (_emissionLerping){
             _rend.material.color = _color;
-            Color newEmiitedColor = Color.Lerp(_color, _soundColor, scaler * 7);
+            Color newEmiitedColor = Color.Lerp(_color, _soundColor, scaler * _emmisionLerpStrenght);
             _rend.material.SetColor("_EmissionColor", newEmiitedColor);
         }
         else
@@ -81,6 +82,10 @@ public class AffectedByGravity : MonoBehaviour {
 
     public void GravityOff() {
         _rb.useGravity = false;
+    }
+
+    public void SetEmissionLerpStrenght(float strenght) {
+        _emmisionLerpStrenght = strenght;
     }
 	
 	// Update is called once per frame

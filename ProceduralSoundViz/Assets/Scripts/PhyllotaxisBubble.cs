@@ -22,6 +22,8 @@ public class PhyllotaxisBubble : Phyllotaxis
     public Gradient _gradient;
     public bool _lerpyScale = false;
     public bool _emissionLerping = false;
+    [Range(1,10)]
+    public float _emissionLerpStrenght = 7;
 
     [Range(0, 1)]
     public float _audioTreshhold;
@@ -61,9 +63,12 @@ public class PhyllotaxisBubble : Phyllotaxis
         var attractors = new List<IPhylloEffected>(_objects.Keys);
         foreach (MovingAttractor attractor in attractors)
         {
-            attractor.UpdateTreshhold(_audioTreshhold);//unique
+            /*
             attractor.SetLerpMode(_lerpyScale);
             attractor.SetEmissionLerpMode(_emissionLerping);
+            */
+            attractor.UpdateTreshhold(_audioTreshhold);//unique
+            attractor.UpdateChildrenBubbles(_emissionLerpStrenght, _emissionLerping, _lerpyScale);
         }
     }
 

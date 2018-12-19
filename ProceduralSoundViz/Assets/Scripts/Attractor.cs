@@ -42,6 +42,22 @@ public class Attractor : MonoBehaviour {
         CheckBandTreshHold();
 	}
 
+    public void UpdateChildrenBubbles(float strenght, bool emissionLerp, bool lerpMode) {
+        foreach (AffectedByGravity a in _soundObjects)
+        {
+            a.SetEmissionLepring(emissionLerp);
+            a.SetLerpyScale(lerpMode);
+            a.SetEmissionLerpStrenght(strenght);
+        }
+    }
+
+    public void UpdateEmissionLerpStrenght(float strenght) {
+        foreach (AffectedByGravity a in _soundObjects)
+        {
+            a.SetEmissionLerpStrenght(strenght);
+        }
+    }
+
     public void UpdateTreshhold(float newTreshhold) {
         _bandTreshhold = newTreshhold;
     }

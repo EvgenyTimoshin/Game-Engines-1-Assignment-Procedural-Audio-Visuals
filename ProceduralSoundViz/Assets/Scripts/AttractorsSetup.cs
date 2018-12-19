@@ -16,6 +16,9 @@ public class AttractorsSetup : MonoBehaviour {
     private List<Attractor> _attractors = new List<Attractor>();
     public Gradient _gradient;
     public bool _lerpyScale = true;
+    public bool _emissionLerping = false;
+    [Range(1, 10)]
+    public float _emissionLerpStrenght = 7;
 
     [Range(0,1)]
     public float _audioTreshhold;
@@ -52,7 +55,7 @@ public class AttractorsSetup : MonoBehaviour {
     private void UpdateAttractors() {
         foreach (Attractor a in _attractors) {
             a.UpdateTreshhold(_audioTreshhold);
-            a.SetLerpMode(_lerpyScale);
+            a.UpdateChildrenBubbles(_emissionLerpStrenght, _emissionLerping, _lerpyScale);
         }
     }
 }
