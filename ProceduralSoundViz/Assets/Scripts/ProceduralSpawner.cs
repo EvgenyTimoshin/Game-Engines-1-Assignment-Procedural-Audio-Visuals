@@ -46,12 +46,12 @@ public class ProceduralSpawner : MonoBehaviour {
 			//yield return WaitForSeconds (freq * Random.Range(0,3));
 			GameObject newObj = Instantiate (go, new Vector3 (_spawnInfrontOf.transform.position.x, _spawnInfrontOf.transform.position.y,
 				_spawnInfrontOf.transform.position.z + freq * 500), Quaternion.identity);
-			yield return WaitForSeconds (freq);
+			yield return new WaitForSeconds (freq);
 		}
 	}
 
 	int CalculateSpawnFrequency(){
-		_spawnRandomSeed = Mathf.Sqrt (_spawnRandomSeed);
+		_spawnRandomSeed = (int)Mathf.Sqrt (_spawnRandomSeed);
 		_spawnRandomSeed = _spawnRandomSeed * Random.Range (1, 20);
 		return _spawnRandomSeed / 100;
 	}
