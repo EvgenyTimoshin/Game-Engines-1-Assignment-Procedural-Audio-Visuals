@@ -8,19 +8,28 @@ public class ProceduralSpawner : MonoBehaviour {
 	[Range(1,30)]
 	public int _spawnRandomSeed;
 	public bool _affectedByMusic = false;
+	[Range(1,100)]
+	public int _lifeTimeOfObjects;
 	[Range(1,10)]
 	public int _musicBand;
 
 	public Dictionary<GameObject,int> _spawnAbles = new Dictionary<GameObject,int>();
 
+	/// <summary>
+	/// Awake this instance. And Assign spawn frequencies to the selected objects
+	/// </summary>
 	void Awake(){
 		foreach (Transform t in transform) {
 			t.transform.parent = null;
 			int freq = CalculateSpawnFrequency ();
 			_spawnAbles.Add (t.gameObject, freq);
+			StartCoroutine (SpawnObjects (t.gameObject, freq));
 		}
 	}
 
+	/// <summary>
+	/// Reset the spawnable object to be child of this object
+	/// </summary>
 	void OnDisable(){
 		foreach(KeyValuePair<GameObject, int> entry in _spawnAbles)
 		{
@@ -34,7 +43,9 @@ public class ProceduralSpawner : MonoBehaviour {
 
 	IEnumerator SpawnObjects(GameObject go, int freq){
 		while (true) {
-			GameObject newObj = Instantiate (go, new Vector3 (0, 0, freq * 150), Quaternion.identity);
+			//yield return WaitForSeconds (freq * Random.Range(0,3));
+			GameObject newObj = Instantiate (go, new Vector3 (_spawnInfrontOf.transform.position.x, _spawnInfrontOf.transform.position.y,
+				_spawnInfrontOf.transform.position.z + freq * 500), Quaternion.identity);
 			yield return WaitForSeconds (freq);
 		}
 	}
