@@ -28,6 +28,10 @@ public class AttractorsSetup : MonoBehaviour {
 
     
 	// Use this for initialization
+    /// <summary>
+    /// Sets up this class, kind of like a constructor
+    /// Creates the amount of attractors to spawn and specifies other paramters for the attractor to use
+    /// </summary>
 	public virtual void Start () {
         for (int i = 0; i < _attractorBands.Length; i++) {
 
@@ -58,7 +62,9 @@ public class AttractorsSetup : MonoBehaviour {
         UpdateAttractors();
     }
 
-
+    /// <summary>
+    /// Updates the child Attractor elements
+    /// </summary>
     private void UpdateAttractors() {
         foreach (Attractor a in _attractors) {
             a.UpdateTreshhold(_audioTreshhold);

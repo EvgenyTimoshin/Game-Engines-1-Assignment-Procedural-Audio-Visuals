@@ -23,6 +23,15 @@ public class Terrain : MonoBehaviour {
     Color _lerpToColor = new Color(0, 255, 0);
     Renderer _mat;
 
+    /// <summary>
+    /// Static method for creating and instance of this class and mesh in code
+    /// </summary>
+    /// <param name="_xSize"></param>
+    /// <param name="_zSize"></param>
+    /// <param name="infitinite"></param>
+    /// <param name="predmade"></param>
+    /// <param name="band"></param>
+    /// <returns></returns>
     public static Terrain Create(int _xSize , int _zSize,bool infitinite,bool predmade, int band) {
         Terrain t = new GameObject().AddComponent<Terrain>();
         t._band = band;
@@ -84,6 +93,10 @@ public class Terrain : MonoBehaviour {
         //Debug.Log(lerpColor + "  +    " + _mat.material.color);
     }
 
+    /// <summary>
+    /// Increased the terrain size at certain speed 
+    /// </summary>
+    /// <returns></returns>
     IEnumerator IncreaseTerrainSize() {
         while (true) {
             zSize += 1;
@@ -92,7 +105,9 @@ public class Terrain : MonoBehaviour {
         }
     }
 
-
+    /// <summary>
+    /// Creates the shape of the mesh
+    /// </summary>
     void CreateShape() {
         //_verticies = new Vector3[(xSize + 1) * (zSize + 1)];
         var verticiesLenght = (xSize + 1) * (zSize + 1);
@@ -143,6 +158,9 @@ public class Terrain : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Updates the mesh every frame
+    /// </summary>
     void UpdateMesh() {
 
         var AudioSample = AudioAnalyzer.bands[_band];

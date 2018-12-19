@@ -41,6 +41,9 @@ public class PhyllotaxisTrails : Phyllotaxis {
 
     //Non inherited methods
 
+    /// <summary>
+    /// Updates the child objects
+    /// </summary>
     protected override void UpdateObjects()
     {
         var trails = new List<IPhylloEffected>(_objects.Keys);

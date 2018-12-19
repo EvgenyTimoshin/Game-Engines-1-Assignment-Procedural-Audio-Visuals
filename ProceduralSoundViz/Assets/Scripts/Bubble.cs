@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AffectedByGravity : MonoBehaviour {
+public class Bubble : MonoBehaviour {
     Rigidbody _rb;
     protected Transform _attractedTo;
     ///Make this modifiable in the editor
@@ -19,8 +19,16 @@ public class AffectedByGravity : MonoBehaviour {
     private float _emmisionLerpStrenght;
     // Use this for initialization
 
-    public static AffectedByGravity Create(Vector3 pos, float size, Transform attractedTo, Material mat) {
-        AffectedByGravity ab = GameObject.CreatePrimitive(PrimitiveType.Sphere).AddComponent<AffectedByGravity>();
+    /// <summary>
+    /// Static Create method for instatiating this class as part of a game object
+    /// </summary>
+    /// <param name="pos"> Position where it will be intantiated</param>
+    /// <param name="size"> The size of each buble</param>
+    /// <param name="attractedTo"> What transform the objects will gravitate towards</param>
+    /// <param name="mat"> The material that the object will  use</param>
+    /// <returns></returns>
+    public static Bubble Create(Vector3 pos, float size, Transform attractedTo, Material mat) {
+        Bubble ab = GameObject.CreatePrimitive(PrimitiveType.Sphere).AddComponent<Bubble>();
         Rigidbody rb = ab.gameObject.AddComponent<Rigidbody>();
         rb.useGravity = false;
         ab.gameObject.name = "ReactiveObj";
@@ -39,6 +47,7 @@ public class AffectedByGravity : MonoBehaviour {
         return ab;
     }
 
+    
 	void Start () {
         _rb = GetComponent<Rigidbody>();
         _rend = GetComponent<Renderer>();
@@ -46,6 +55,11 @@ public class AffectedByGravity : MonoBehaviour {
         //GetComponent<Material>().EnableKeyword("_EMISSION");
     }
 
+    /// <summary>
+    /// Controls how the object scales based on scaler value passed in
+    /// This is usually the audioband
+    /// </summary>
+    /// <param name="scaler"></param>
     public void Scale(float scaler) {
         //Mathf.Lerp(ls.y, 1 + (AudioAnalyzer.bands[i] * scale), Time.deltaTime * 3.0f);
         //transform.localScale = Vector3.Lerp(_minSize, _maxSize, scaler);
@@ -71,26 +85,47 @@ public class AffectedByGravity : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Sets whether emission lerping is on or not
+    /// </summary>
+    /// <param name="set">boolean value toi set</param>
     public void SetEmissionLepring(bool set) {
         _emissionLerping = set;
     }
 
+    /// <summary>
+    /// Sets whether lerpy scale is on or not
+    /// </summary>
+    /// <param name="set">boolean value to set</param>
     public void SetLerpyScale(bool set) {
         _lerpyScale = set;
     }
 
+    /// <summary>
+    /// Turns on gravity of the object
+    /// </summary>
     public void GravityOn() {
         _rb.useGravity = true;
     }
 
+    /// <summary>
+    /// Turns off the gravity of the object
+    /// </summary>
     public void GravityOff() {
         _rb.useGravity = false;
     }
 
+    /// <summary>
+    /// Sets the strenght of the emission lerp function
+    /// </summary>
+    /// <param name="strenght"></param>
     public void SetEmissionLerpStrenght(float strenght) {
         _emmisionLerpStrenght = strenght;
     }
 
+    /// <summary>
+    /// Runs once every physics frame
+    /// </summary>
     private void FixedUpdate()
     {
         if (_attractedTo)

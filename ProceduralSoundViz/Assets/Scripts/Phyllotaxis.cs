@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This is the base class for the phyllotaxis algorithm
+/// </summary>
 public class Phyllotaxis : MonoBehaviour {
 
     public float _scale;
@@ -54,6 +57,9 @@ public class Phyllotaxis : MonoBehaviour {
 		
 	}
 
+    /// <summary>
+    /// Runs every phycis frame and takes care of updating all objects and calculating the phyllotaxis positions
+    /// </summary>
     private void FixedUpdate()
     {
         UpdateObjects();
@@ -112,14 +118,22 @@ public class Phyllotaxis : MonoBehaviour {
     }
     */
 
-
+    /// <summary>
+    /// Sets the Lerp positions of the phyllotaxis algorithm
+    /// </summary>
     protected void SetLerpPositions() {
         _phyllotaxisPosition = CalculatePhylllotaxis(_degree, _scale, _number);
         _startPos = transform.localPosition;
         _endPos = new Vector3(_phyllotaxisPosition.x, _phyllotaxisPosition.y, 0);
     }
     
-
+    /// <summary>
+    /// Calculates the new phyllotaxis postion (Core algorithm)
+    /// </summary>
+    /// <param name="degree">the degree</param>
+    /// <param name="scale">the scale (Radius) </param>
+    /// <param name="count">which iteration of the algorithm</param>
+    /// <returns></returns>
     protected Vector2 CalculatePhylllotaxis(float degree, float scale, int count)
     {
         double angle = count * (degree * Mathf.Deg2Rad);
@@ -129,6 +143,9 @@ public class Phyllotaxis : MonoBehaviour {
         return new Vector2(x, y);
     }
 
+    /// <summary>
+    /// Scales the polytaxis size (Itterations)
+    /// </summary>
     protected void ScalePolytaxisSize()
     {
         if (_scalePhyllotaxisSize)
@@ -142,13 +159,24 @@ public class Phyllotaxis : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Returns the degree difference based on amount of objects that will be used (points)
+    /// </summary>
+    /// <param name="num">amount of objects that will be used</param>
+    /// <returns></returns>
     protected int GetDegreeDiff(int num) {
         var degreeDiff = (int)(360 / _degree / num);
         return degreeDiff;
     }
 
+    /// <summary>
+    /// Abstract or Virtual method that must be implemented and overriden to update the respective objects of child class
+    /// </summary>
     protected virtual void UpdateObjects() { }
 
+    /// <summary>
+    /// Sets the new target positions for whatever classes are exetending this class
+    /// </summary>
     public void SetNewTargetPoses()
     {
         var objs = new List<IPhylloEffected>(_objects.Keys);
@@ -160,6 +188,9 @@ public class Phyllotaxis : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Lerpts the objects to the their new targets
+    /// </summary>
     public void LerpObjsToTarget()
     {
         foreach (KeyValuePair<IPhylloEffected, int> entry in _objects)
@@ -169,6 +200,9 @@ public class Phyllotaxis : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Updates the lerp timer based on the audio band
+    /// </summary>
     public void UpdateLerpTimer()
     {
         _lerpPosSpeed = Mathf.Lerp(_lerpPosSpeedMinMax.x, _lerpPosSpeedMinMax.y, _lerpPosAnimCurve.Evaluate(AudioAnalyzer.bands[_lerpPosBand]));

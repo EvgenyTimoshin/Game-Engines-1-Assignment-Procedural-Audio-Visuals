@@ -57,7 +57,9 @@ public class PhyllotaxisBubble : Phyllotaxis
     }
 
     //Non inherited methods
-
+    /// <summary>
+    /// Updates the child objects
+    /// </summary>
     protected override void UpdateObjects()
     {
         var attractors = new List<IPhylloEffected>(_objects.Keys);

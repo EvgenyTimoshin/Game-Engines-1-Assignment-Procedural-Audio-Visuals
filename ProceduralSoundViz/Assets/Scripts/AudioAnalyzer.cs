@@ -36,6 +36,9 @@ public class AudioAnalyzer : MonoBehaviour
         binWidth = AudioSettings.outputSampleRate / 2 / frameSize;
     }
 
+    /// <summary>
+    /// Splits the audio into frequency bands 
+    /// </summary>
     void GetFrequencyBands()
     {
         for (int i = 0; i < bands.Length; i++)
@@ -64,6 +67,9 @@ public class AudioAnalyzer : MonoBehaviour
     }
     */
 
+        /// <summary>
+        /// Runs every frame to split hte bands into frequencies
+        /// </summary>
     private void FixedUpdate()
     {
         audioSource.GetSpectrumData(spectrum, 0, FFTWindow.Blackman);
