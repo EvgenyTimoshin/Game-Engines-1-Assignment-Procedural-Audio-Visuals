@@ -218,6 +218,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114050939299011832, guid: 968b077d3501ab44180241da2cb15a62,
+        type: 2}
+      propertyPath: _emissionLerping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114050939299011832, guid: 968b077d3501ab44180241da2cb15a62,
+        type: 2}
+      propertyPath: _emissionLerpStrenght
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 968b077d3501ab44180241da2cb15a62, type: 2}
   m_IsPrefabAsset: 0
@@ -793,6 +803,16 @@ Prefab:
       propertyPath: _gradient.ctime4
       value: 48380
       objectReference: {fileID: 0}
+    - target: {fileID: 114705365478743304, guid: d2f9b7c838f6d1f4eb825a1971766e6b,
+        type: 2}
+      propertyPath: _emissionLerping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114705365478743304, guid: d2f9b7c838f6d1f4eb825a1971766e6b,
+        type: 2}
+      propertyPath: _emissionLerpStrenght
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2f9b7c838f6d1f4eb825a1971766e6b, type: 2}
   m_IsPrefabAsset: 0
@@ -978,7 +998,7 @@ Prefab:
     - target: {fileID: 114316470819310718, guid: e40a47845221d5f4eb4a610d689ee02d,
         type: 2}
       propertyPath: _scale
-      value: 0.8094839
+      value: 0.7318798
       objectReference: {fileID: 0}
     - target: {fileID: 114316470819310718, guid: e40a47845221d5f4eb4a610d689ee02d,
         type: 2}
@@ -998,7 +1018,7 @@ Prefab:
     - target: {fileID: 114316470819310718, guid: e40a47845221d5f4eb4a610d689ee02d,
         type: 2}
       propertyPath: _minMaxScale.y
-      value: 2.72
+      value: -6.84
       objectReference: {fileID: 0}
     - target: {fileID: 1604352605190194, guid: e40a47845221d5f4eb4a610d689ee02d, type: 2}
       propertyPath: m_Name
@@ -1011,17 +1031,17 @@ Prefab:
     - target: {fileID: 114316470819310718, guid: e40a47845221d5f4eb4a610d689ee02d,
         type: 2}
       propertyPath: _degree
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114316470819310718, guid: e40a47845221d5f4eb4a610d689ee02d,
         type: 2}
       propertyPath: _stepSize
-      value: 19
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114316470819310718, guid: e40a47845221d5f4eb4a610d689ee02d,
         type: 2}
       propertyPath: _lerpPosSpeedMinMax.x
-      value: 0.3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114316470819310718, guid: e40a47845221d5f4eb4a610d689ee02d,
         type: 2}
@@ -1031,12 +1051,12 @@ Prefab:
     - target: {fileID: 114316470819310718, guid: e40a47845221d5f4eb4a610d689ee02d,
         type: 2}
       propertyPath: _numOfObjects
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114316470819310718, guid: e40a47845221d5f4eb4a610d689ee02d,
         type: 2}
       propertyPath: _trailTime
-      value: 0.25
+      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e40a47845221d5f4eb4a610d689ee02d, type: 2}

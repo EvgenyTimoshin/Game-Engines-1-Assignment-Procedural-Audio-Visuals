@@ -235,6 +235,16 @@ Prefab:
       propertyPath: _attractorSpacing
       value: 4.32
       objectReference: {fileID: 0}
+    - target: {fileID: 114050939299011832, guid: 968b077d3501ab44180241da2cb15a62,
+        type: 2}
+      propertyPath: _emissionLerping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114050939299011832, guid: 968b077d3501ab44180241da2cb15a62,
+        type: 2}
+      propertyPath: _emissionLerpStrenght
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 968b077d3501ab44180241da2cb15a62, type: 2}
   m_IsPrefabAsset: 0
@@ -1440,6 +1450,16 @@ Prefab:
     - target: {fileID: 1575738969480122, guid: d2f9b7c838f6d1f4eb825a1971766e6b, type: 2}
       propertyPath: m_Name
       value: PhylloBubbles (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114705365478743304, guid: d2f9b7c838f6d1f4eb825a1971766e6b,
+        type: 2}
+      propertyPath: _emissionLerping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114705365478743304, guid: d2f9b7c838f6d1f4eb825a1971766e6b,
+        type: 2}
+      propertyPath: _emissionLerpStrenght
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2f9b7c838f6d1f4eb825a1971766e6b, type: 2}
