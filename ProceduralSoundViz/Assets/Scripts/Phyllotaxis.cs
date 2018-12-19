@@ -12,6 +12,7 @@ public class Phyllotaxis : MonoBehaviour {
     public int _stepSize;
     public Vector2 _lerpPosSpeedMinMax;
     public AnimationCurve _lerpPosAnimCurve;
+    [Range(0,6)]
     public int _lerpPosBand;
     public bool _useLerping;
     public Vector2 _minMaxScale;
