@@ -32,6 +32,9 @@ public class Phyllotaxis : MonoBehaviour {
     protected int _degreeDiff;
     [Range(1, 8)]
     public int _numOfObjects;
+    public bool _changeDegrees = false;
+    [Range(1,200)]
+    public int _changeDegreeInterval = 10;
 
     protected Dictionary<IPhylloEffected, int> _objects = new Dictionary<IPhylloEffected, int>();
 
@@ -62,6 +65,7 @@ public class Phyllotaxis : MonoBehaviour {
     /// </summary>
     private void FixedUpdate()
     {
+        CheckDegreeChange();
         UpdateObjects();
         ScalePolytaxisSize();
         if (_useLerping)
@@ -117,6 +121,16 @@ public class Phyllotaxis : MonoBehaviour {
         }
     }
     */
+
+    public void CheckDegreeChange() {
+        if (_changeDegrees)
+        {
+            if (_currentIteration % _changeDegreeInterval == 0)
+            {
+                _stepSize = _stepSize * -1;
+            }
+        }
+    }
 
     /// <summary>
     /// Sets the Lerp positions of the phyllotaxis algorithm

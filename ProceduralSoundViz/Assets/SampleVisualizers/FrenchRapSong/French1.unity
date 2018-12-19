@@ -439,6 +439,16 @@ Prefab:
       propertyPath: _stepSize
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114316470819310718, guid: e40a47845221d5f4eb4a610d689ee02d,
+        type: 2}
+      propertyPath: _changeDegrees
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114316470819310718, guid: e40a47845221d5f4eb4a610d689ee02d,
+        type: 2}
+      propertyPath: _changeDegreeInterval
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e40a47845221d5f4eb4a610d689ee02d, type: 2}
   m_IsPrefabAsset: 0
@@ -1018,7 +1028,7 @@ Prefab:
     - target: {fileID: 114316470819310718, guid: e40a47845221d5f4eb4a610d689ee02d,
         type: 2}
       propertyPath: _minMaxScale.y
-      value: -6.84
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 1604352605190194, guid: e40a47845221d5f4eb4a610d689ee02d, type: 2}
       propertyPath: m_Name
@@ -1057,6 +1067,16 @@ Prefab:
         type: 2}
       propertyPath: _trailTime
       value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 114316470819310718, guid: e40a47845221d5f4eb4a610d689ee02d,
+        type: 2}
+      propertyPath: _changeDegrees
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114316470819310718, guid: e40a47845221d5f4eb4a610d689ee02d,
+        type: 2}
+      propertyPath: _changeDegreeInterval
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e40a47845221d5f4eb4a610d689ee02d, type: 2}
