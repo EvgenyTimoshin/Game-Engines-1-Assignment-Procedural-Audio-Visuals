@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhylloTrail : MonoBehaviour, IPhylloEffected {
+public class PhylloTrail : MonoBehaviour,IPhylloEffected {
 
     protected Vector3 _currentPos;
     protected Vector3 _targetPos;

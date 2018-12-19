@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomObject : MonoBehaviour,IPhylloEffected {
+public class CustomObject : MonoBehaviour, IPhylloEffected {
 
     protected Vector3 _currentPos;
     protected Vector3 _targetPos;
     protected float _posLerpSpeed;
+
+
+    public static CustomObject Create(GameObject prefab) {
+        CustomObject obj = prefab.AddComponent<CustomObject>();
+
+        return obj;
+    }
 
     // Use this for initialization
     void Start () {
@@ -18,6 +25,10 @@ public class CustomObject : MonoBehaviour,IPhylloEffected {
 		
 	}
 
+    public void ChangeScale(float size) {
+        transform.localScale = new Vector3(size, size, size);
+    }
+
     public void LerpToTarget()
     {
         transform.localPosition = Vector3.Lerp(transform.localPosition, _targetPos, _posLerpSpeed);
@@ -25,11 +36,11 @@ public class CustomObject : MonoBehaviour,IPhylloEffected {
 
     public void SetLerpSpeed(float speed)
     {
-        throw new System.NotImplementedException();
+        _posLerpSpeed = speed;
     }
 
     public void SetTargetPosition(Vector3 newEndPos)
     {
-        throw new System.NotImplementedException();
+        _targetPos = newEndPos;
     }
 }
